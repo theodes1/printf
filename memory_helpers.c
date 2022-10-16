@@ -1,9 +1,3 @@
-/*
- * File: memory_helpers.c
- * Auth: Ridwan Olayemi
- * 	 Ovayemi Samuel
- */
-
 #include "main.h"
 
 unsigned int _memcpy(buffer_t *output, const char *src, unsigned int n);
@@ -34,11 +28,9 @@ unsigned int _memcpy(buffer_t *output, const char *src, unsigned int n)
 			output->buffer = output->start;
 			output->len = 0;
 		}
-
 		else
 			(output->buffer)++;
 	}
-
 	return (n);
 }
 

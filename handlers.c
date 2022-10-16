@@ -1,9 +1,3 @@
-/*
- * File: handlers.c
- * Auth: Obayemi Samuel
- *       Ridwan Olayemi
- */
-
 #include "main.h"
 
 unsigned char handle_flags(const char *flag, char *index);
@@ -51,7 +45,6 @@ unsigned char handle_flags(const char *flag, char *index)
 		if (flags[j].value == 0)
 			break;
 	}
-
 	return (ret);
 }
 
@@ -70,13 +63,11 @@ unsigned char handle_length(const char *modifier, char *index)
 		(*index)++;
 		return (SHORT);
 	}
-
 	else if (*modifier == 'l')
 	{
 		(*index)++;
 		return (LONG);
 	}
-
 	return (0);
 }
 
@@ -104,12 +95,10 @@ int handle_width(va_list args, const char *modifier, char *index)
 				return (0);
 			return (value);
 		}
-
 		value *= 10;
 		value += (*modifier - '0');
 		modifier++;
 	}
-
 	return (value);
 }
 
@@ -141,7 +130,6 @@ int handle_precision(va_list args, const char *modifier, char *index)
 			(*index)++;
 		return (0);
 	}
-
 	while ((*modifier >= '0' && *modifier <= '9') ||
 	       (*modifier == '*'))
 	{
@@ -154,12 +142,10 @@ int handle_precision(va_list args, const char *modifier, char *index)
 				return (0);
 			return (value);
 		}
-
 		value *= 10;
 		value += (*modifier - '0');
 		modifier++;
 	}
-
 	return (value);
 }
 
@@ -198,6 +184,5 @@ unsigned int (*handle_specifiers(const char *specifier))(va_list, buffer_t *,
 		if (converters[i].specifier == *specifier)
 			return (converters[i].func);
 	}
-
 	return (NULL);
 }

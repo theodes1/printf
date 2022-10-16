@@ -1,8 +1,3 @@
-/*
- * File: modifiers.c
- * Auth: Ridwan Olayemi
- */
-
 #include "main.h"
 
 unsigned int print_width(buffer_t *output, unsigned int printed,
@@ -33,7 +28,6 @@ unsigned int print_width(buffer_t *output, unsigned int printed,
 		for (wid -= printed; wid > 0;)
 			ret += _memcpy(output, &width, 1);
 	}
-
 	return (ret);
 }
 
@@ -59,7 +53,6 @@ unsigned int print_string_width(buffer_t *output,
 		for (; wid > 0; wid--)
 			ret += _memcpy(output, &width, 1);
 	}
-
 	return (ret);
 }
 
@@ -84,6 +77,5 @@ unsigned int print_neg_width(buffer_t *output, unsigned int printed,
 		for (wid -= printed; wid > 0; wid--)
 			ret += _memcpy(output, &width, 1);
 	}
-
 	return (ret);
 }
