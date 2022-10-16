@@ -1,40 +1,50 @@
-
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
 
 /**
- * _printf - Function that produces output according to a format.
- * @format: Pointer
- * Return: Always 0
+ * _printf - copy of the printf function.
+ * @format: string that contains the format to print.
+ * Return: 0 if success.
  */
-
 int _printf(const char *format, ...)
 {
-	va_list print;
-	int count = 0;
+print my_print[] = {
+	{"d", print_int}, {"i", print_int}, {"s", print_string}, {"c", print_char},
+	{"r", print_revstr}, {"o", print_octal}, {"x", print_lowhex},
+	{"b", print_binary}, {"R", print_rot13}, {"%", print_p}, {"p", print_ptr},
+	{"u", print_unsigned}, {"X", print_upphex}, {"S", print_S}, {NULL, NULL},
+};
+	int count = 0, flags = 0, length = 0, s = 0;
+		va_list arg;
 
-	MyPrint ops[] = {
-		{"c", op_character},
-		{"s", op_string},
-		{"i", op_integer},
-		{"d", op_integer},
-		{"r", op_reverse},
-		{"R", op_rot13},
-		{"b", op_binary},
-		{"o", op_octal},
-		{"u", op_unsigned_decimal},
-		{"x", op_hex},
-		{"X", op_HEX},
-		{"S", op_SString},
-		{"p", op_address},
-	};
-
+	va_start(arg, format);
 	if (format == NULL)
 		return (-1);
-	va_start(print, format);
-
-	count = validator(format, print, ops);
-	va_end(print);
-	return (count);
+	while (format[count] != '\0')
+	{
+		flags = 0;
+		if (format[count] == '%')
+		{
+			s = 0;
+		if (format[count + 1] == '\0')
+			return (-1);
+		while (my_print[flags].str)
+		{
+			if (format[count + 1] == my_print[flags].str[0])
+			{
+				length += (my_print[flags].f(arg)) - 2;
+				count++;
+				s = 1;
+				break;
+			}
+			flags++;
+		}
+		if (s == 0)
+			_putchar(format[count]);
+		}
+		else
+			_putchar(format[count]);
+		count++;
+	}
+	va_end(arg);
+	return (count + length);
 }
