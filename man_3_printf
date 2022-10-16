@@ -1,0 +1,89 @@
+.\" _printf man page
+
+.TH _PRINTF "16 october 2022" "1.0" "..."
+
+.SH NAME
+_printf \- ...
+
+.SH SYNOPSIS
+
+#include "main.h"
+
+int _printf(const char *format, ...)
+
+.SH DESCRIPTION
+
+Copy of the printf function.
+A customized _printf() function, developed for a holberton project by cohort #9  Samuel Obayemi and Ridwanullahi Badmus.
+This function write its output to the stdout, the standard output stream.
+All of these functions write the output under the control of a
+format string that specifies how subsequent arguments (or
+arguments accessed via the variable-length argument facilities of
+stdarg) are converted for output.
+
+.B Format of the format string
+  The format string is a character string, beginning and ending in
+  its initial shift state, if there is any.
+
+.SH CONVERSION SPECIFIERS
+
+A character that specifies the type of conversion to be applied.
+The conversion specifiers and their meanings are:
+....
+
+.B d, i 
+Used to print signed decimals from an int argument.
+
+.B s
+Used to print characters from an array. The argument is a a pointer to an array of characters.
+
+.B c 
+Writes a character(unsigned char) from an int argument.
+
+.B b 
+Converts an int into a binary number and prints the result. 
+
+.B o, u, x, X 
+Converts an unsigned int into: unsigned octal (o), unsigned decimal (u), unsigned hexadecimal in lowercase (x) or unsigned hexadecimal in uppercase (X) and prints the result.
+
+.B S
+Converts into hexadecimal ASCII values between 0 and 32, equal or bigger than 127. Prints this way: \x, followed by the ASCII code value in hexadecimal.
+
+.B p
+Prints in hexadecimal the memory address stored in a void * pointer argument.
+
+.B r
+Used to print a string in reverse.
+
+.B R
+The string received is printed in rot13 form.
+
+
+.SH RETURN VALUE
+
+Return value is the number of characters printed excluding null byte.
+If there is an output error, the function returns a negative value.
+
+
+.SH EXAMPLES
+
+To print a string of characters:
+
+#include "main.h"
+_printf("Hello, World");
+
+To print the octal value of a decimal stored into a variable:
+
+#include "main.h"
+d = 20;
+_printf("%o", d);
+
+To print the name and age of a person:
+
+#include "main.h"
+d = 10;
+_printf("My name is %s and I'm %d years old.", "shade", d);
+
+.SH AUTHOR
+
+Samuel Obayemi and  Ridwanullahi Badmus
