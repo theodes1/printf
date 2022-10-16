@@ -1,36 +1,37 @@
-#ifndef PRINTF_H
-#define PRINTF_H
-
+#ifndef MAIN_H
+#define MAIN_H
 #include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-int _printf(const char *format, ...);
 /**
- * struct format - Data type of a format.
- * @op: Format.
- * @f: Function.
- *
+ * struct prt - struct that contains functions.
+ * @str: string that contains the format.
+ * @f: function of specific type.
  */
 
-typedef struct format
+typedef struct prt
 {
-	char *op;
-	int (*f)(va_list print);
-} MyPrint;
+	char *str;
+	int (*f)(va_list args);
+} print;
 
-
+int print_int(va_list args);
+int print_char(va_list args);
+int print_string(va_list args);
+int print_revstr(va_list args);
+int print_rot13(va_list args);
+int print_octal(va_list args);
+int print_binary(va_list args);
+int print_p(va_list args);
+int print_lowhex(va_list args);
+int print_lowhex_aux(unsigned long int a);
+int print_upphex(va_list args);
+int print_upphex_aux(int aux);
+int print_unsigned(va_list args);
+int print_ptr(va_list args);
+int print_S(va_list args);
 int _putchar(char c);
-int op_character(va_list form);
-int op_string(va_list form);
-int op_integer(va_list form);
-int op_reverse(va_list form);
-int op_rot13(va_list form);
-int validator(const char *format, va_list print1, MyPrint *ops1);
-int op_binary(va_list form);
-int op_octal(va_list form);
-int op_unsigned_decimal(va_list form);
-int op_hex(va_list form);
-int op_HEX(va_list form);
-int op_SString(va_list form);
-int op_address(va_list form);
+int _printf(const char *format, ...);
 
 #endif
