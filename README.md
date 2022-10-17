@@ -1,155 +1,479 @@
-# 0x11.C - printf
+# _printf :page_facing_up:
 
-This is a project that's part of the first trimester of alx_School curriculum. Our printf project replicates part of the C standard library printf() function.
+A formatted output conversion C program completed as part of the low-level
+programming and algorithm track at Holberton School. The program is a pseudo-
+recreation of the C standard library function, `printf`.
 
-## Prototype
+## Dependencies :couple:
 
-int _printf(const char *format, ...);
+The `_printf` function was coded on an Ubuntu 14.04 LTS machine with `gcc` version 4.8.4.
 
-## Usage
+## Usage :running:
 
-Prints a string to the standard output, according to a given format
+To use the `_printf` function, assuming the above dependencies have been installed,
+compile all `.c` files in the repository and include the header `holberton.h` with
+any main function.
 
-All files were created and compiled on Ubuntu 14.04.4 LTS using GCC 4.8.4 with the command gcc -Wall -Werror -Wextra -pedantic - Wno-format *.c
+Example `main.c`:
+```
+#include "holberton.h"
 
-All files were linted for syntax and style with Betty
+int main(void)
+{
+    _printf("Hello, World!");
 
-Returns the number of characters in the output string on success, -1 otherwise
+    return (0);
+}
+```
 
-Call it this way: _printf("format string", arguments...) where format string can contain conversion specifiers and flags, along with regular characters.
+Compilation:
+```
+$ gcc *.c -o tester
+```
 
-## Examples
+Output:
+```
+$ ./tester
+Hello, World!
+$
+```
 
-Print string: _printf("%s There", "Hello");`
+## Description :speech_balloon:
 
-Output: Hello There
+The function `_printf` writes output to standard output. The function writes
+under the control of a `format` string that specifies how subsequent arguments
+(accessed via the variable-length argument facilities of `stdarg`) are
+converted for output.
 
-Print integers: _printf("This is a number: %d", 58]);`
+Prototype: `int _printf(const char *format, ...);`
 
-Output: This is a number: 58
+### Return Value
 
-Print octal: _printf("Octal: %o, 120);
+Upon successful return, `_printf` returns the number of characters printed
+(excluding the terminating null byte used to end output to strings). If an
+output error is encountered, the function returns `-1`.
 
-Output: Octal: 170
+### Format of the Argument String
 
-### Conversion Specifiers
+The `format` string argument is a constant character string composed of zero
+or more directives: ordinary characters (not `%`) which are copied unchanged
+to the output stream; and conversion specifications, each of which results in
+fetching zero or more subsequent arguments. Conversion specification is
+introduced by the character `%` and ends with a conversion specifier. In
+between the `%` character and conversion specifier, there may be (in order)
+zero or more _flags_, an optional minimum _field width_, an optional
+_precision_ and an optional _length_ modifier. The arguments must correspond
+with the conversion specifier, and are used in the order given.
 
-Specifier                |Output                        |Examples |
-|----------------|-------------------------------|-----------------------------|
-| `c` | Character | z |
-| `d` or `i` | Signed integer | 1024, -1024 |
-| `s` | String of characters | Hello There |
-| `b` | Binary version of  an unsigned integer | 01010110 |
-| `u` | Unsigned integer | 1024 |
-| `o` | Unsigned octal | 432 |
-| `x` | Unsigned hexadecimal integer | 3ca |
-| `X` | Unsigned hexadecimal integer (Uppercase) | 3CA |
-| `p` | Pointer address | 0x403212 |
-| `r` | Reversed string of characters | erehT olleH |
-| `R` | ROT13 Translation of string | Uryyb |
+#### Flag Characters
 
-------------
+The character `%` may be followed by zero or more of the following flags:
 
-#### Files contained in this repository
+#### #
+  * For `o` conversions, the first character of the output string is prefixed
+  with `0` if it was not zero already.
+  * For `x` converions, `0x` is prepended for non-zero numbers.
+  * For `X` conversions, `0X` is prepeneded for non-zero numbers.
 
-|Name                |Description                 
-|----------------|-------------------------------
-`man_3_printf`|Man page of the _printf() function.|
-`main.h`	| Header file with the data type struct, standard libraries and custom prototypes.|
-`_print.c`|Main printf function file. Calls other functions.|
-`print_p.c`|Contains percentage print function.|
-`print_number.c` | Contains decimal and integer functions. | 
-`print_char.c` | Custom function for char data type. |
-`print_string.c` | Function that calls string type variable. |
-`print_binary.c` | Function that gets the binary |
-`print_octal.c` | Functions that returns octal number. | 
-`print_lowhex.c` | Calls hexadecimal numbers (lowercase). | 
-`print_upphex.c` | Calls hexadecimal numbers (Uppercase). |
-`print_unsigned.c` | Returns an unisgined data type. |
-`print_lowhex_aux.c` | Auxiliar function for hexadecimal specific functions (lowercase).|  
-`print_ptr.c `| Function that prints a pointer.|
-`print_revstr.c` | Returns a string in reverse. |
-`print_rot13.c` | Returns a string in Rot13. |
-`_putchar.c` | Custom putchar function.|
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%#x\n", 7);
+}
+```
+Output:
+```
+0x7
+```
 
--------------------------------------------------------------------------------------------------
+#### (space)
+  * A blank is left before a positive number or empty string produced by a
+  signed conversion.
 
-#### Task requested in this project
-------------
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("% d\n", 7);
+}
+```
+Output:
+```
+ 7
+```
 
-0. ##### I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life1.  I am not going anywhere. You can print that wherever you want to. I'm here and I am a Spur for life. 
+#### +
+  * A sign (`+` or `-`) is always placed before a number produced by signed
+  conversion.
+  * Overrides a space flag.
 
-Write a function that produces output according to a format.
-Handle the following conversion specifiers:
-- c
-- s
-- %
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%+d\n", 7);
+}
+```
+Output:
+```
++7
+```
 
-1. ##### Education is when you read the fine print. Experience is what you get if you dont
+#### 0
+  * For `d`, `i`, `o`, `u`, `x`, and `X` conversions, the converted value is
+  padded on the left with zeroes rather than blanks.
+  * If the `0` flag is provided to a numeric conversion with a specified
+  precision, it is ignored.
 
-Handle the following conversion specifiers:
-- d
-- i
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%05d\n", 7);
+}
+```
+Output:
+```
+00007
+```
 
-2. ##### Just because its in print doesn't mean its the gospel
-Create a man page for the function
+#### -
+  * The converted value is left-justified (padded on the right with blanks
+  instead of on the left with blanks or zeroes).
+  * Overrides a `0` flag.
 
-3. ##### With a face like mine, I do better in print|
-Handle the following conversion specifiers:
-- b
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%-5d7\n", 7);
+}
+```
+Output:
+```
+7    7
+```
 
-4. ##### What one has not experienced, one will never understand in print
-Handle the following conversion specifiers:
-- u
-- x
-- o
-- x
-- X
+#### Field Width
 
-5. ##### Nothing in fine print is ever good news
-Use a local buffer of 1024 chars in order to call write as little as possible.
+After flags, a minimum field width may be specified by a decimal digit string
+The first digit must be non-zero. If the converted value has fewer characters
+than the provided width, the output is padded on the left or right with spaces
+(depending on whether the `-` flag was provided).
 
-6. ##### Handle the following custom conversion specifier
-- S : prints the string.
-- Non printable characters (0 < ASCII value < 32 or >= 127) are printed this way: \x, followed by the ASCII code value in hexadecimal (upper case - always 2 characters).
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%7d\n", 7);
+}
+```
+Ouptut:
+```
+      7
+```
 
-7. ##### How is the world ruled and led to war? Diplomats lie to journalists and believe these lies when they see them in print
-Handle the following conversion specifier: p
+Alternatively, width may be provied as an argument using the `*` character
+For example, in the following:
+`_printf("%*d\n", 6, 1);`
+the argument `6` is considered the width for the conversion of the decimal `1`.
 
-8. ##### The big print gives and the small print takes away
-Handle the following flag characters for non-custom conversion specifiers:
-- ´+´
-- space
-- ´#´ 
+#### Precision
 
-9. ##### Sarcasm is lost in print
-Handle the following length modifiers for non-custom conversion specifiers:
-- l
-- h
-Conversion specifiers to handle: d, i, u, o, x, X
+After any flags or provided width, a precision may be specified by a `.`
+followed by a decimal digit string. For `d`, `i`, `o`, `u`, `x`, and `X`
+conversions, the precision specifies the minimum number of digits to appear.
+For `s` and `S` conversions, the precision specifies the maximum characters
+to be printed.
 
-10. ##### Print some money and give it to us for the rain forests
-Handle the field width for non-custom conversion specifiers.
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%.7d\n", 7);
+}
+```
+Output:
+```
+0000007
+```
 
-11. ##### The negative is the equivalent of the composer's score, and the print the performance
-Handle the precision for non-custom conversion specifiers.
+Alternatively, precision may be provided as an argument using the `*` character
+after the `.`. For example, in the following:
+`_printf("%.*d\n", 6, 1);`
+the argument `6` is considered the precision for the conversion of the decimal
+`1`.
 
-12. ##### It's depressing when you're still around and your albums are out of print
-Handle the 0 flag character for non-custom conversion specifiers.
+#### Length Modifiers
 
-13. ##### Every time that I wanted to give up, if I saw an interesting textile, print what ever, suddenly I would see a collection
-Handle the - flag character for non-custom conversion specifiers.
+After flags, width, and precision and before a conversion specifier, one of the
+following length modifiers may be provided:
 
-14. ##### Print is the sharpest and the strongest weapon of our party
-Handle the following custom conversion specifier:
- - r : prints the reversed string
+#### h
+Specifies that an integer conversion corresponds to a `short int` or
+`unsigned short int` argument.
 
-15. ##### The flood of print has turned reading into a process of gulping rather than savoring 
-Handle the following custom conversion specifier:
-- R: prints the rot13'ed string
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%hd\n", SHRT_MAX);
+}
+```
+Output:
+```
+32767
+```
 
-16. ##### *
-All the above options work well together.
+#### l
+Specifies that an integer conversion corresponds to a `long int` or
+`unsigned long int` argument.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%ld\n", LONG_MAX);
+}
+```
+Output:
+```
+9223372036854775807
+```
+
+#### Conversion Specifiers
+
+The conversion specifier (introduced by the character `%`) is a character that
+specifies the type of conversion to be applied. The `_printf` function
+supports the following conversion specifiers:
+
+#### d, i
+The `int` argument is converted to signed decimal notation.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%d\n", 7);
+}
+```
+Output:
+```
+7
+```
+
+#### b
+The `unsigned int` argument is converted to signed decimal notation.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%b\n", 7);
+}
+```
+Output:
+```
+111
+```
+
+#### o, u, x, X
+The `unsigned int` argument is converted to unsigned octal (`o`), unsigned
+decimal (`u`), or unsigned hexadecimal (`x` and `X`). The letters `abcdef` are
+used for `x` conversions and the letters `ABCDEF` are used for `X` conversions.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%o\n", 77);
+}
+```
+Output:
+```
+115
+```
+
+#### c
+The `int` argument is converted to an `unsigned char`.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%c\n", 48);
+}
+```
+Output:
+```
+0
+```
+
+#### s
+The `const char *` argument is expected to be a pointer to a character array
+(aka. pointer to a string). Characters from the array are written starting
+from the first element of the array and ending at, but not including, the
+terminating null byte (`\0`).
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%s\n", "Hello, World!");
+}
+```
+Output:
+```
+Hello, World!
+```
+
+#### S
+Identical to the `s` conversion specifier, except any non-printable characters
+in the array (ie. characters with an ASCII value < 32 or >= 127) are written
+as `\x` followed by the ASCII code value in hexadecimal (upper case, two
+characters).
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%S\n", "Hello, World! Π");
+}
+```
+Output:
+```
+Hello, World! \x0FFFFFFFFFFFFFFCE\x0FFFFFFFFFFFFFFA0
+```
+
+r
+Identical to the `s` conversion specifier, except characters from the array
+are written in reverse, starting from, but not including, the terminating null
+byte (`\0`) and ending at the first element of the array.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("r\n", "Hello, World");
+}
+```
+Output:
+```
+dlroW ,olleH
+```
+
+#### R
+
+Identical to the `s` conversion specifier, except each character of the array
+is converted to its corresponding character in ROT13 before being written.
+
+Example `main.c`:
+```
+int main(void)
+{
+    _printf("%R\n", "Hello, World");
+}
+```
+Output:
+```
+Uryyb, Jbeyq
+```
+
+#### p
+The address of the argument is written. The address is written in hexadecimal
+with a leading `0x`.
+
+Example `main.c`:
+```
+int main(void)
+{
+    char *str = "Hello, World";
+
+    _printf("%p\n", (void *)str);
+}
+```
+Output:
+```
+0x561a6d7bab5d
+```
+
+#### %
+A `%` is written. No argument is converted. The complete conversion
+specification is `%%`.
+
+Example:
+```
+int main(void)
+{
+    _printf("%%\n");
+}
+```
+Output:
+```
+%
+```
+
+## More Examples :thumbsup:
+
+To print the address of Holberton School in the format "972 Mission St., San
+Francisco, CA 94103" where *street*, *city* and *state* are pointers to strings:
+
+Example `main.c`:
+```
+#include "holberton.h"
+
+int main(void)
+{
+	char *street = "Mission St.", *city = "San Francisco", *state = "CA";
+
+	_printf("%d %s, %s, %s %d\n", 972, street, city, state, 94103);
+}
+```
+Output:
+```
+972 Mission St., San Francisco, CA 94103
+```
+
+To print the result of basic mathematical operations prepended by signs and
+all numbers printed with a minimum precision of two digits:
+
+Example `main.c`:
+```
+#include "holberton.h"
+
+int main(void)
+{
+	_printf("%.2d + %.2d = %+.2d\n", 1, 2, 1 + 2);
+	_printf("%d - %d = %+d\n", 10, 20, 10 - 20);
+}
+```
+Output:
+```
+01 + 02 = +03
+10 - 20 = -10
+```
+
+To print the values of `LONG_MAX` and `LONG_MIN` aligned and
+left-justified with a width of 30:
+
+Example `main.c`:
+```
+#include "holberton.h"
+#include <limits.h>
+
+int main(void)
+{
+	_printf("% -30ld -> LONG_MAX\n", LONG_MAX);
+	_printf("%-30ld -> LONG_MIN\n", LONG_MIN);
+}
+```
+Output:
+```
+ 9223372036854775807           -> LONG_MAX
+-9223372036854775808           -> LONG_MIN
+```
+
 
 ## Authors
 
