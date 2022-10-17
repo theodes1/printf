@@ -220,7 +220,7 @@ Francisco, CA 94103", followed by a new line, where \fIstreet\fR, \fIcity\fR,
 and \fIstate\fR are pointers to strings:
 
 .RS
-#include "holberton.h"
+#include "main.h"
 
 int main(void)
 
